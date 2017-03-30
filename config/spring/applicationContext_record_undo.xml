@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+	
+	<bean id="reportUndoAction" class="org.cronhub.managesystem.modules.record.undo.action.ReportUndoAction">	
+		<property name="undoRecordDao" ref="undoRecordDao"/>
+		<property name="taskDao" ref="taskDao"/>
+	</bean>
+	<bean id="undoRecordDao" class="org.cronhub.managesystem.modules.record.undo.dao.impl.UndoRecordDaoImpl">
+		<property name="jdbcTemplate" ref="jdbcTemplate"/>
+		<property name="daemonDao" ref="daemonDao"/>
+		<property name="taskDao" ref="taskDao"/>
+	</bean>
+	<bean id="record.undo.treeLoadAction" class="org.cronhub.managesystem.modules.record.undo.action.TreeLoadAction">
+		<property name="recordDao" ref="undoRecordDao"/>
+	</bean>
+	<bean id="recordUndoPageViewAction" class="org.cronhub.managesystem.modules.record.undo.action.PageViewAction">
+		<property name="undoRecordDao" ref="undoRecordDao"/>
+		<property name="pageGen" ref="pageSqlGen"/>
+	</bean>
+</beans>

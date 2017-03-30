@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+	
+	<bean id = "pageSqlGen" class="org.cronhub.managesystem.commons.utils.PageSqlGenerater">
+		<property name="template" ref="jdbcTemplate"/>
+	</bean>
+	<bean id="remoteExecuteProcessor" class="org.cronhub.managesystem.commons.thrift.process.RemoteExecutCmdProcessor">
+		<property name="doneRecordDao" ref="doneRecordDao"/>
+		<property name="taskDao" ref="taskDao"/>
+		<property name="undoRecordDao" ref="undoRecordDao"/>
+		<property name="undoReportHttpUrl" value="${undoReportHttpUrl}"/>
+	</bean>
+	<bean id="emailUtils" class="org.cronhub.managesystem.commons.utils.email.EmailUtils">
+		<constructor-arg index="0" type="java.lang.String" value="${alertFromUserMail}"/>
+		<constructor-arg index="1" type="java.lang.String" value="${alertFromPassword}"/>
+		<constructor-arg index="2" type="java.lang.String" value="${alertHostMail}"/>
+	</bean>
+</beans>

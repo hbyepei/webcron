@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+	
+	<bean id="daemonPageAddAction" class="org.cronhub.managesystem.modules.daemon.action.PageAddAction">	
+		<property name="dao" ref="daemonDao"/>
+		<property name="alertMailJson" value="${alertDestMail}"/>
+	</bean>
+	<bean id="daemonDao" class="org.cronhub.managesystem.modules.daemon.dao.impl.DaemonDaoImpl">
+		<property name="jdbcTemplate" ref="jdbcTemplate"/>
+		<property name="doneRecordDao" ref="doneRecordDao"/>
+		<property name="taskDao" ref="taskDao"/>
+	</bean>
+	
+	<bean id="daemonPageViewAction" class="org.cronhub.managesystem.modules.daemon.action.PageViewAction">	
+		<property name="dao" ref="daemonDao"/>
+		<property name="pageGen" ref="pageSqlGen"/>
+		<property name="updateShellName" value="${updateShellName}"/>
+		<property name="updateShellDownloadUrl" value="${serverRootUrl}/download/${updateShellName}"/>
+	</bean>
+	<bean id="communicateDetect" class="org.cronhub.managesystem.modules.daemon.boot.CommunicateDetect">
+		<property name="daemonDao" ref="daemonDao"/>
+		<property name="email" ref="emailUtils"/>
+	</bean>
+</beans>

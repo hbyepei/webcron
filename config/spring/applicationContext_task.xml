@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+	
+	<bean id="taskPageAddAction" class="org.cronhub.managesystem.modules.task.action.PageAddAction">	
+		<property name="dao" ref="taskDao"/>
+	</bean>
+	<bean id="taskPageViewAction" class="org.cronhub.managesystem.modules.task.action.PageViewAction">	
+		<property name="dao" ref="taskDao"/>
+		<property name="pageGen" ref="pageSqlGen"/>
+	</bean>
+	<bean id ="taskDao" class="org.cronhub.managesystem.modules.task.dao.impl.TaskDaoImpl">
+		<property name="jdbcTemplate" ref="jdbcTemplate"/>
+		<property name="daemonDao" ref="daemonDao"/>
+		<property name="doneRecordDao" ref="doneRecordDao"/>
+	</bean>
+	
+	<bean id="passiveModeNotifyCrontab" class="org.cronhub.managesystem.modules.task.boot.PassiveModeNotifyCrontab">
+		<property name="doneRecordDao" ref="doneRecordDao"/>
+		<property name="undoRecordDao" ref="undoRecordDao"/>
+		<property name="taskDao" ref="taskDao"/>
+		<property name="undoReportHttpUrl" value="${undoReportHttpUrl}"/>
+		<property name="processor" ref="remoteExecuteProcessor"/>
+	</bean>
+	<bean id="immediateRemoteExecAction" class="org.cronhub.managesystem.modules.task.action.ImmediateRemoteExecuteAction">
+		<property name="processor" ref="remoteExecuteProcessor"/>
+	</bean>
+</beans>
